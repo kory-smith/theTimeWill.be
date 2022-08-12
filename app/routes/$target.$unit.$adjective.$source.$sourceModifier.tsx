@@ -11,6 +11,20 @@ const localized24 = /^(\d{1,2})(:)(\d{1,2})$/i;
 const localized24NoColon = /^\d{4}$/i;
 // 07 pm
 const hoursOnly = /^\d{1,2}(\ )(AM|PM)$/i;
+
+const localizedTimeKey = "t";
+const localized24HourTimeKey = "T";
+
+function getTimeFormat({ source, sourceModifier }: Params) {
+  const combinedSource = `${source} ${sourceModifier}`;
+
+  if (localized.test(combinedSource)) {
+    return localizedTimeKey;
+  } else if (localized24.test(combinedSource)) {
+    return localized24HourTimeKey;
+  }
+}
+
 export const loader = ({ params }: LoaderArgs) => {
   //                       target | unit  | adjective | source | sourceModifier
   //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
