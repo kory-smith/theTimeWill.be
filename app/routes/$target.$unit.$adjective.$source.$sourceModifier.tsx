@@ -35,7 +35,7 @@ export const loader = ({ params }: LoaderArgs) => {
 
   invariant(unit, "must be existing");
 
-  const plusOrMinus = "plus";
+  const plusOrMinus = adjective === "past" ? "plus" : "minus";
 
   const solution = trueSource[plusOrMinus]({ [unit]: target });
 
