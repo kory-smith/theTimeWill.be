@@ -31,7 +31,8 @@ export const loader = ({ params }: LoaderArgs) => {
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source, sourceModifier } = params;
 
-  const trueSource = DateTime.fromFormat(`${source} ${sourceModifier}`, "t");
+  const formatKey = getTimeFormat(params);
+  const trueSource = DateTime.fromFormat(`${source} ${sourceModifier}`, formatKey);
 
   invariant(unit, "must be existing");
 
