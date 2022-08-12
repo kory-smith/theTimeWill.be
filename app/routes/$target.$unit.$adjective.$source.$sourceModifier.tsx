@@ -1,6 +1,6 @@
 import { json, LoaderArgs } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import { useLoaderData } from "@remix-run/react";
+import { Params, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 
 // 07:30 pm || 7:30 PM
