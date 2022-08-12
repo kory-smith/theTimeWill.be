@@ -4,6 +4,9 @@ import { useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 
 export const loader = ({ params }: LoaderArgs) => {
+  //                       target | unit  | adjective | source | sourceModifier
+  //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
+  // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source, sourceModifier } = params;
 
   const trueSource = DateTime.fromFormat(`${source} ${sourceModifier}`, "t");
