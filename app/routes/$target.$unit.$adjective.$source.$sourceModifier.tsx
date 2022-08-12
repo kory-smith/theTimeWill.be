@@ -3,6 +3,14 @@ import invariant from "tiny-invariant";
 import { useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 
+// 07:30 pm || 7:30 PM
+const localized = /^(\d{1,2})(:)(\d{1,2})(\ )(AM|PM)$/i;
+// 19:30
+const localized24 = /^(\d{1,2})(:)(\d{1,2})$/i;
+// 1900 || 0730
+const localized24NoColon = /^\d{4}$/i;
+// 07 pm
+const hoursOnly = /^\d{1,2}(\ )(AM|PM)$/i;
 export const loader = ({ params }: LoaderArgs) => {
   //                       target | unit  | adjective | source | sourceModifier
   //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
