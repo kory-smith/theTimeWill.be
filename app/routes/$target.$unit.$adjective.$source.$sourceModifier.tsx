@@ -12,6 +12,7 @@ const localized24NoColon = /^\d{4}$/i;
 // 07 pm
 const hoursOnly = /^\d{1,2}(\ )(AM|PM)$/i;
 
+// https://moment.github.io/luxon/#/parsing?id=table-of-tokens
 const localizedTimeKey = "t";
 const localized24HourTimeKey = "T";
 
