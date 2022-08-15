@@ -19,7 +19,7 @@ const localized24HourTimeKey = "T";
 function getTimeFormat({ source, sourceModifier }: Params) {
   const combinedSource = `${source} ${sourceModifier}`;
 
-  if (localized.test(combinedSource)) {
+  if (localized.test(combinedSource) && parseInt(combinedSource.split(":")[0]) <= 12) {
     return localizedTimeKey;
   } else if (localized24.test(combinedSource)) {
     return localized24HourTimeKey;
@@ -43,9 +43,9 @@ export const loader = ({ params }: LoaderArgs) => {
 
   return json({
     source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toLocaleString(
-      DateTime.TIME_SIMPLE
+      formatKey
     )}?`,
-    solution: solution.toLocaleString(DateTime.TIME_SIMPLE),
+    solution: solution.toLocaleString(formatKey),
   });
 };
 
