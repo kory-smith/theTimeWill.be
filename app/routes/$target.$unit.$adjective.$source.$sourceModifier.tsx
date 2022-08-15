@@ -16,14 +16,15 @@ const hoursOnly = /^\d{1,2}(\ )(AM|PM)$/i;
 const localizedTimeKey = "t";
 const localized24HourTimeKey = "T";
 
+// Are we in the correct format, or and if not, what do we do about it?
 function getTimeFormat({ source, sourceModifier }: Params) {
-  const combinedSource = `${source} ${sourceModifier}`;
+  const timeWithModifier = `${source} ${sourceModifier}`;
 
-  if (localized.test(combinedSource) && parseInt(combinedSource.split(":")[0]) <= 12) {
+  const [hours, _minutes] = timeWithModifier.split(":").map(parseInt)
+  if (localized.test(timeWithModifier) && hours <= 12) {
     return localizedTimeKey;
-  } else if (localized24.test(combinedSource)) {
-    return localized24HourTimeKey;
-  }
+  } 
+  throw new Error("Invalid time format for this page")
 }
 
 export const loader = ({ params }: LoaderArgs) => {
