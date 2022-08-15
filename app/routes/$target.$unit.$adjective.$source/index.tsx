@@ -3,6 +3,10 @@ import invariant from "tiny-invariant";
 import { Params, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 
+// This is the page for military time or 24-hour time
+// https://theTimeWill.be/122/minutes/before/13:50/
+// https://theTimeWill.be/122/minutes/before/1350/
+
 
 const t = /^(\d{1,2})(:)(\d{1,2})(\ )(AM|PM)$/i
 const T = /^(\d{1,2})(:)(\d{1,2})$/i
