@@ -5,15 +5,16 @@ import { DateTime } from "luxon";
 import { getTimeFormat } from "~/helpers/getTimeFormat";
 
 export const loader = ({ params }: LoaderArgs) => {
-  //                       target | unit  | adjective | source | sourceModifier
+  //                       target | unit  | adjective | source | meridian
   //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
-  const { target, unit, adjective, source, sourceModifier } = params;
+  const { target, unit, adjective, source, meridian } = params;
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
+  // todo: Check if we are in 24-hour time but in the meridian route. If so, change things.
   
-  const trueSource = DateTime.fromFormat(`${source} ${sourceModifier}`.trim(), parsingKey);
+  const trueSource = DateTime.fromFormat(`${source} ${meridian}`.trim(), parsingKey);
 
   invariant(unit, "must be existing");
 

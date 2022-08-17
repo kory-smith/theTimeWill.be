@@ -19,9 +19,9 @@ const localizedTimeKey = "t";
 const localized24HourTimeKey = "T";
 
 // Are we in the correct format, or and if not, what do we do about it?
-export function getTimeFormat({ source, sourceModifier }: Params) {
-  // trim so that if there's no sourceModifier, we don't get random whitespace.
-  const fullTime = `${source} ${sourceModifier}`.trim();
+export function getTimeFormat({ source, meridian }: Params) {
+  // trim so that if there's no meridian, we don't get random whitespace.
+  const fullTime = `${source} ${meridian}`.trim();
 
   invariant(source, "Must provide a source");
 

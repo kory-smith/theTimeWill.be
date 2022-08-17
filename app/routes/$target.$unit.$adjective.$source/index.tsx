@@ -12,17 +12,17 @@ const t = /^(\d{1,2})(:)(\d{1,2})(\ )(AM|PM)$/i
 const T = /^(\d{1,2})(:)(\d{1,2})$/i
 
 function getTimeFormat(params: Params) {
-  const { target, unit, adjective, source, sourceModifier } = params;
+  const { target, unit, adjective, source, meridian } = params;
 
-//  console.log( DateTime.fromFormatExplain(`${source} ${sourceModifier}`, "T"))
- console.log( t.test(`${source} ${sourceModifier}`))
+//  console.log( DateTime.fromFormatExplain(`${source} ${meridian}`, "T"))
+ console.log( t.test(`${source} ${meridian}`))
 
 
 
 }
 
 export const loader = ({ params }: LoaderArgs) => {
-  //                       target | unit  | adjective | source | sourceModifier
+  //                       target | unit  | adjective | source | meridian
   //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source } = params;
