@@ -2,30 +2,7 @@ import { json, LoaderArgs } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { Params, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
-
-// 07:30 pm || 7:30 PM
-const localized = /^(\d{1,2})(:)(\d{1,2})(\ )(AM|PM)$/i;
-// 19:30
-const localized24 = /^(\d{1,2})(:)(\d{1,2})$/i;
-// 1900 || 0730
-const localized24NoColon = /^\d{4}$/i;
-// 07 pm
-const hoursOnly = /^\d{1,2}(\ )(AM|PM)$/i;
-
-// https://moment.github.io/luxon/#/parsing?id=table-of-tokens
-const localizedTimeKey = "t";
-const localized24HourTimeKey = "T";
-
-// Are we in the correct format, or and if not, what do we do about it?
-function getTimeFormat({ source, sourceModifier }: Params) {
-  const timeWithModifier = `${source} ${sourceModifier}`;
-
-  const [hours, _minutes] = timeWithModifier.split(":").map(parseInt)
-  if (localized.test(timeWithModifier) && hours <= 12) {
-    return localizedTimeKey;
-  } 
-  throw new Error("Invalid time format for this page")
-}
+import { getTimeFormat } from "~/helpers/getTimeFormat";
 
 export const loader = ({ params }: LoaderArgs) => {
   //                       target | unit  | adjective | source | sourceModifier
@@ -33,8 +10,7 @@ export const loader = ({ params }: LoaderArgs) => {
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source, sourceModifier } = params;
 
-  const formatKey = getTimeFormat(params);
-  const trueSource = DateTime.fromFormat(`${source} ${sourceModifier}`, formatKey);
+  const { parsingKey, formatKey } = getTimeFormat(params);
 
   invariant(unit, "must be existing");
 
