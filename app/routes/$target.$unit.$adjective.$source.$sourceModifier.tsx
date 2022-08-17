@@ -1,6 +1,6 @@
 import { json, LoaderArgs } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import { Params, useLoaderData } from "@remix-run/react";
+import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 import { getTimeFormat } from "~/helpers/getTimeFormat";
 
@@ -79,4 +79,9 @@ export default function Example() {
       </h2>
     </>
   );
+}
+
+export function CatchBoundary() {
+  const { data } = useCatch();
+  return <p>{data.error}. Please provide a valid time. You provided {data.input}</p>
 }
