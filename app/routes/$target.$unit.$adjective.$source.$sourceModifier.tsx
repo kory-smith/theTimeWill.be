@@ -12,6 +12,9 @@ export const loader = ({ params }: LoaderArgs) => {
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
+  
+  const trueSource = DateTime.fromFormat(`${source} ${sourceModifier}`.trim(), parsingKey);
+
   invariant(unit, "must be existing");
 
   const plusOrMinus = adjective === "past" ? "plus" : "minus";
