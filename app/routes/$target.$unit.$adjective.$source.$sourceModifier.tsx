@@ -43,8 +43,8 @@ export const loader = ({ params }: LoaderArgs) => {
   const solution = trueSource[plusOrMinus]({ [unit]: target });
 
   return json({
-    source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toLocaleString(
-      formatKey
+    source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toFormat(
+      parsingKey
     )}?`,
     solution: solution.toLocaleString(formatKey),
   });
