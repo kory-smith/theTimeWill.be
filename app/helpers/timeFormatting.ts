@@ -104,8 +104,8 @@ export function getTimeFormat({ source, meridiem }: Params) {
   // 07 || 13
   if (
     regexes.paddedTwentyFourHour.test(fullTime) &&
-    militaryHours <= 23 &&
-    militaryMinutes <= 59
+    hours <= 23 &&
+    minutes <= 59
   ) {
     return {
       parsingKey: parsingKeys.paddedTwentyFourHour,
@@ -114,8 +114,8 @@ export function getTimeFormat({ source, meridiem }: Params) {
     // 7
   } else if (
     regexes.twentyFourHour.test(fullTime) &&
-    militaryHours <= 23 &&
-    militaryMinutes <= 59
+    hours <= 23 &&
+    minutes <= 59
   ) {
     return {
       parsingKey: parsingKeys.twentyFourHour,
@@ -124,8 +124,8 @@ export function getTimeFormat({ source, meridiem }: Params) {
     // 07:22 || 13:22
   } else if (
     regexes.paddedTwentyFourHourWithMinutes.test(fullTime) &&
-    militaryHours <= 23 &&
-    militaryMinutes <= 59
+    hours <= 23 &&
+    minutes <= 59
   ) {
     return {
       parsingKey: parsingKeys.paddedTwentyFourHourWithMinutes,
@@ -144,8 +144,8 @@ export function getTimeFormat({ source, meridiem }: Params) {
     // 7:22
   } else if (
     regexes.twentyFourHourWithMinutes.test(fullTime) &&
-    militaryHours <= 23 &&
-    militaryMinutes <= 59
+    hours <= 23 &&
+    minutes <= 59
   ) {
     return {
       parsingKey: parsingKeys.twentyFourHourWithMinutes,
