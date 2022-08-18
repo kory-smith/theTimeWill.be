@@ -37,12 +37,11 @@ const parsingKeys = {
   twentyFourHourWithMinutes: "H:mm",
 };
 
-export function isTwelveHourFormat(parsingKey: string) {
+// We have the ability to know that 13:22 is ALWAYS a 24-hour time.
+export function is24HourTime(time: string) {
   return (
-    parsingKey === parsingKeys.paddedTwelveHourWithMeridiem ||
-    parsingKey === parsingKeys.twelveHourWithMeridiem ||
-    parsingKey === parsingKeys.paddedTwelveHourWithMeridiemAndMinutes ||
-    parsingKey === parsingKeys.twelveHourWithMeridiemAndMinutes
+    parseInt(time.split(":")[0]) > 12 ||
+    (parseInt(time.substring(0, 2)) > 12 && time.length === 4)
   );
 }
 

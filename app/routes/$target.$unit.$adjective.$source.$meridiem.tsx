@@ -2,7 +2,7 @@ import { json, LoaderArgs, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
-import { getTimeFormat, isTwelveHourFormat } from "~/helpers/timeFormatting";
+import { getTimeFormat, is24HourTime } from "~/helpers/timeFormatting";
 
 export const loader = ({ params }: LoaderArgs) => {
   //                       target | unit  | adjective | source | meridiem
@@ -10,17 +10,19 @@ export const loader = ({ params }: LoaderArgs) => {
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source, meridiem } = params;
 
+  invariant(unit, "must be existing");
+  invariant(source, "must be existing");
+
+  if (is24HourTime(source)) {
+    return redirect(`/${target}/${unit}/${adjective}/${source}/`);
+  }
+  
   const { parsingKey, formatKey } = getTimeFormat(params);
 
-  // this doesn't work because getTimeFormat uses the meridiem if it's there.
-  // Do we just want to check if the hour is > 12 && < 24?
-  // if (!isTwelveHourFormat(parsingKey)) {
-  //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)
-  // }
-  
-  const trueSource = DateTime.fromFormat(`${source} ${meridiem}`.trim(), parsingKey);
-
-  invariant(unit, "must be existing");
+  const trueSource = DateTime.fromFormat(
+    `${source} ${meridiem}`.trim(),
+    parsingKey
+  );
 
   const plusOrMinus = adjective === "past" ? "plus" : "minus";
 
