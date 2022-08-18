@@ -2,7 +2,7 @@ import { json, LoaderArgs } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
-import { getTimeFormat } from "~/helpers/getTimeFormat";
+import { getTimeFormat, isTwelveHourFormat } from "~/helpers/timeFormatting";
 
 export const loader = ({ params }: LoaderArgs) => {
   //                       target | unit  | adjective | source | meridian
