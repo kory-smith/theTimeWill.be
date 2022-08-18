@@ -1,4 +1,4 @@
-import { json, LoaderArgs } from "@remix-run/node";
+import { json, LoaderArgs, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { Params, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
@@ -14,16 +14,16 @@ export const loader = ({ params }: LoaderArgs) => {
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source } = params;
 
-  const { parsingKey, formatKey } = getTimeFormat(params);
-
-  // todo: Check if we are in 24-hour time but in the meridiem route. If so, change things.
-  // Is that possible?
-  // if (parsingKey) {
-  //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)
-  // }
-
   invariant(unit, "must be existing");
   invariant(source, "must be existing");
+  invariant(target, "must be existing");
+
+  const { parsingKey, formatKey } = getTimeFormat(params);
+
+  // If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
+  if (parseInt(target) === 1 && unit[unit.length - 1] === "s") {
+    return redirect(`/${target}/${unit.slice(0, unit.length - 1)}/${adjective}/${source}/`)
+  }
 
   const trueSource = DateTime.fromFormat(source.trim(), parsingKey);
 

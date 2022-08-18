@@ -12,6 +12,14 @@ export const loader = ({ params }: LoaderArgs) => {
 
   invariant(unit, "must be existing");
   invariant(source, "must be existing");
+  invariant(target, "must be existing");
+
+  // If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
+  if (parseInt(target) === 1 && unit[unit.length - 1] === "s") {
+    return redirect(
+      `/${target}/${unit.slice(0, unit.length - 1)}/${adjective}/${source}/`
+    );
+  }
 
   if (is24HourTime(source)) {
     return redirect(`/${target}/${unit}/${adjective}/${source}/`);
