@@ -40,7 +40,9 @@ const parsingKeys = {
 // We have the ability to know that 13:22 is ALWAYS a 24-hour time.
 export function is24HourTime(time: string) {
   return (
-    parseInt(time.split(":")[0]) > 12 ||
+    // If time contains a colon and the numbers to the left of the colon are > 12
+    (time.indexOf(":") !== -1 && parseInt(time.split(":")[0]) > 12) ||
+    // If time is 4 digits and the first two are > 12 (e.g. 13)
     (parseInt(time.substring(0, 2)) > 12 && time.length === 4)
   );
 }
