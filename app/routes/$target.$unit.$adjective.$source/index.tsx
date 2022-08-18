@@ -22,7 +22,9 @@ export const loader = ({ params }: LoaderArgs) => {
 
   // If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
   if (parseInt(target) === 1 && unit[unit.length - 1] === "s") {
-    return redirect(`/${target}/${unit.slice(0, unit.length - 1)}/${adjective}/${source}/`)
+    return redirect(
+      `/${target}/${unit.slice(0, unit.length - 1)}/${adjective}/${source}/`
+    );
   }
 
   const trueSource = DateTime.fromFormat(source.trim(), parsingKey);
@@ -43,48 +45,10 @@ export default function Example() {
   const data = useLoaderData<typeof loader>();
   return (
     <>
-      <h1
-        style={{
-          font: "18px/26px 'Times New Roman',Times,FreeSerif,serif",
-          fontFamily: "Montserrat,Arial,Helvetica,sans-serif",
-          margin: 0,
-          padding: 0,
-          border: 0,
-          outline: 0,
-          clear: "both",
-          lineHeight: "40px",
-          fontStyle: "normal",
-          letterSpacing: 0,
-          paddingBottom: 0,
-          marginRight: "30px",
-          fontWeight: 900,
-          float: "left",
-        }}
-      >
+      <h1>
         <time>{data.source}</time>
       </h1>
-      <h2
-        style={{
-          font: "18px/26px 'Times New Roman',Times,FreeSerif,serif",
-          color: "#333",
-          letterSpacing: 0,
-          margin: 0,
-          padding: 0,
-          border: 0,
-          outline: 0,
-          clear: "both",
-          direction: "ltr",
-          zIndex: -1,
-          float: "left",
-          whiteSpace: "nowrap",
-          position: "relative",
-          fontFamily: "TimeTraveler,Arial,Helvetica,sans-serif",
-          fontWeight: 400,
-          fontSize: "131px",
-          lineHeight: "91px",
-          marginLeft: "67.5px",
-        }}
-      >
+      <h2>
         It will be <time>{data.solution}</time>
       </h2>
     </>
