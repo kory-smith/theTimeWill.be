@@ -12,7 +12,7 @@ export const loader = ({ params }: LoaderArgs) => {
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
-  // this doesn't work because getTimeFormat uses the meridiam if it's there.
+  // this doesn't work because getTimeFormat uses the meridiem if it's there.
   // Do we just want to check if the hour is > 12 && < 24?
   // if (!isTwelveHourFormat(parsingKey)) {
   //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)
