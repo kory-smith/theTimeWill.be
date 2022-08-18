@@ -1,4 +1,4 @@
-import { json, LoaderArgs } from "@remix-run/node";
+import { json, LoaderArgs, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
@@ -12,7 +12,11 @@ export const loader = ({ params }: LoaderArgs) => {
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
-  // todo: Check if we are in 24-hour time but in the meridian route. If so, change things.
+  // this doesn't work because getTimeFormat uses the meridiam if it's there.
+  // Do we just want to check if the hour is > 12 && < 24?
+  // if (!isTwelveHourFormat(parsingKey)) {
+  //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)
+  // }
   
   const trueSource = DateTime.fromFormat(`${source} ${meridian}`.trim(), parsingKey);
 
