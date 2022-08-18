@@ -46,12 +46,12 @@ export function isTwelveHourFormat(parsingKey: string) {
   );
 }
 
-export function getTimeFormat({ source, meridian }: Params) {
-  // trim so that if there's no meridian, we don't get random whitespace.
+export function getTimeFormat({ source, meridiem }: Params) {
+  // trim so that if there's no meridiem, we don't get random whitespace.
   invariant(source, "Must provide a source");
   let fullTime;
-  if (meridian) {
-    fullTime = `${source} ${meridian}`.trim();
+  if (meridiem) {
+    fullTime = `${source} ${meridiem}`.trim();
   } else fullTime = source.trim();
 
   // 12-hour time

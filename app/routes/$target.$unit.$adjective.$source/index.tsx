@@ -9,14 +9,14 @@ import { getTimeFormat } from "~/helpers/timeFormatting";
 // https://theTimeWill.be/122/minutes/before/1350/
 
 export const loader = ({ params }: LoaderArgs) => {
-  //                       target | unit  | adjective | source | meridian
+  //                       target | unit  | adjective | source | meridiem
   //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
   const { target, unit, adjective, source } = params;
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
-  // todo: Check if we are in 24-hour time but in the meridian route. If so, change things.
+  // todo: Check if we are in 24-hour time but in the meridiem route. If so, change things.
   // Is that possible?
   // if (parsingKey) {
   //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)

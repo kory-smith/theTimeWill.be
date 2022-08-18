@@ -5,10 +5,10 @@ import { DateTime } from "luxon";
 import { getTimeFormat, isTwelveHourFormat } from "~/helpers/timeFormatting";
 
 export const loader = ({ params }: LoaderArgs) => {
-  //                       target | unit  | adjective | source | meridian
+  //                       target | unit  | adjective | source | meridiem
   //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
   // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
-  const { target, unit, adjective, source, meridian } = params;
+  const { target, unit, adjective, source, meridiem } = params;
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
@@ -18,7 +18,7 @@ export const loader = ({ params }: LoaderArgs) => {
   //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)
   // }
   
-  const trueSource = DateTime.fromFormat(`${source} ${meridian}`.trim(), parsingKey);
+  const trueSource = DateTime.fromFormat(`${source} ${meridiem}`.trim(), parsingKey);
 
   invariant(unit, "must be existing");
 
