@@ -22,10 +22,9 @@ export const loader = ({ params }: LoaderArgs) => {
   //   return redirect(`/${target}/${unit}/${adjective}/${source}/`)
   // }
 
-
   invariant(unit, "must be existing");
   invariant(source, "must be existing");
-  
+
   const trueSource = DateTime.fromFormat(source.trim(), parsingKey);
 
   const plusOrMinus = adjective === "past" ? "plus" : "minus";

@@ -16,7 +16,7 @@ export const loader = ({ params }: LoaderArgs) => {
   if (is24HourTime(source)) {
     return redirect(`/${target}/${unit}/${adjective}/${source}/`);
   }
-  
+
   const { parsingKey, formatKey } = getTimeFormat(params);
 
   const trueSource = DateTime.fromFormat(
@@ -90,5 +90,9 @@ export default function Example() {
 
 export function CatchBoundary() {
   const { data } = useCatch();
-  return <p>{data.error}. Please provide a valid time. You provided {data.input}</p>
+  return (
+    <p>
+      {data.error}. Please provide a valid time. You provided {data.input}
+    </p>
+  );
 }
