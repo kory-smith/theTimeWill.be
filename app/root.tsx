@@ -25,7 +25,7 @@ export default function App() {
       <body>
         <Outlet />
         <Form method="post">
-          <p>What time is it...</p>
+          <p>What time will it be...</p>
 
           <input type="number" name="target" placeholder="122" />
 
