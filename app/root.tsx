@@ -1,5 +1,6 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { ActionArgs, MetaFunction } from "@remix-run/node";
 import {
+  Form,
   Links,
   LiveReload,
   Meta,
@@ -23,6 +24,28 @@ export default function App() {
       </head>
       <body>
         <Outlet />
+        <Form method="post">
+          <p>What time is it...</p>
+
+          <input type="number" name="target" placeholder="122" />
+
+          <input list="units" name="unit" placeholder="minutes" />
+          <datalist id="units">
+            <option value="second(s)"></option>
+            <option value="minute(s)"></option>
+            <option value="hour(s)"></option>
+          </datalist>
+
+          <input list="adjectives" name="adjective" placeholder="before" />
+          <datalist id="adjectives">
+            <option value="before"></option>
+            <option value="after"></option>
+          </datalist>
+
+          <input type="time" name="source" value="19:55" />
+
+          <button type="submit">Go</button>
+        </Form>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
@@ -30,3 +53,8 @@ export default function App() {
     </html>
   );
 }
+
+export const action = async ({ request }: ActionArgs) => {
+  const formData = await request.formData();
+  return null;
+};
