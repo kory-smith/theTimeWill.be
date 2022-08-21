@@ -1,4 +1,7 @@
-import type { ActionArgs, MetaFunction } from "@remix-run/node";
+import { withZod } from "@remix-validated-form/with-zod";
+import { ValidatedForm, validationError } from "remix-validated-form";
+import { z } from "zod";
+import { ActionArgs, MetaFunction, redirect } from "@remix-run/node";
 import {
   Form,
   Links,
@@ -8,6 +11,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { DateTime } from "luxon";
+
+export const validator = withZod(
+  z.object({
+    target: z.string(),
+    unit: z.string(),
+    adjective: z.string(),
+    source: z.string(),
+  })
+);
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -24,16 +37,16 @@ export default function App() {
       </head>
       <body>
         <Outlet />
-        <Form method="post">
+        <ValidatedForm validator={validator} method="post">
           <p>What time will it be...</p>
 
           <input type="number" name="target" placeholder="122" />
 
           <input list="units" name="unit" placeholder="minutes" />
           <datalist id="units">
-            <option value="second(s)"></option>
-            <option value="minute(s)"></option>
-            <option value="hour(s)"></option>
+            <option value="seconds"></option>
+            <option value="minutes"></option>
+            <option value="hours"></option>
           </datalist>
 
           <input list="adjectives" name="adjective" placeholder="before" />
@@ -42,10 +55,10 @@ export default function App() {
             <option value="after"></option>
           </datalist>
 
-          <input type="time" name="source" value="19:55" />
+          <input type="time" name="source" />
 
           <button type="submit">Go</button>
-        </Form>
+        </ValidatedForm>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
@@ -55,6 +68,15 @@ export default function App() {
 }
 
 export const action = async ({ request }: ActionArgs) => {
-  const formData = await request.formData();
-  return null;
+  const formData = await validator.validate(await request.formData());
+
+  if (formData.error) return validationError(formData.error);
+
+  const { adjective, source, target, unit } = formData.data
+
+  const sourceDT = DateTime.fromFormat(source, "HH:mm")
+
+  const [twelveHourTime, meridiem] = sourceDT.toLocaleString(DateTime.TIME_SIMPLE).split(" ")
+
+  return redirect(`/${target}/${unit}/${adjective}/${twelveHourTime}/${meridiem}`);
 };
