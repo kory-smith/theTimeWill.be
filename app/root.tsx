@@ -16,8 +16,8 @@ import { DateTime } from "luxon";
 export const validator = withZod(
   z.object({
     target: z.string(),
-    unit: z.string(),
-    adjective: z.string(),
+    unit: z.enum(["second(s)", "minute(s)", "hour(s)"]),
+    adjective: z.enum(["before", "after"]),
     source: z.string(),
   })
 );
@@ -42,11 +42,11 @@ export default function App() {
 
           <input type="number" name="target" placeholder="122" />
 
-          <input list="units" name="unit" placeholder="minutes" />
+          <input list="units" name="unit" placeholder="minute(s)" />
           <datalist id="units">
-            <option value="seconds"></option>
-            <option value="minutes"></option>
-            <option value="hours"></option>
+            <option value="second(s)"></option>
+            <option value="minute(s)"></option>
+            <option value="hour(s)"></option>
           </datalist>
 
           <input list="adjectives" name="adjective" placeholder="before" />
@@ -74,9 +74,11 @@ export const action = async ({ request }: ActionArgs) => {
 
   const { adjective, source, target, unit } = formData.data
 
+  const unitWithoutParens = unit.replace(/(\(|\))/g, "")
+
   const sourceDT = DateTime.fromFormat(source, "HH:mm")
 
   const [twelveHourTime, meridiem] = sourceDT.toLocaleString(DateTime.TIME_SIMPLE).split(" ")
 
-  return redirect(`/${target}/${unit}/${adjective}/${twelveHourTime}/${meridiem}`);
+  return redirect(`/${target}/${unitWithoutParens}/${adjective}/${twelveHourTime}/${meridiem.toLowerCase()}`);
 };
