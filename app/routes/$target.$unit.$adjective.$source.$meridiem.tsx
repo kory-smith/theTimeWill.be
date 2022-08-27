@@ -1,8 +1,17 @@
-import { json, LoaderArgs, redirect } from "@remix-run/node";
+import { json, LoaderArgs, redirect, MetaFunction } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 import { getTimeFormat, is24HourTime } from "~/helpers/timeFormatting";
+import { generateMeta } from "~/helpers/generateMeta";
+
+export const meta: MetaFunction = ({ params, data, location }) => {
+  const { title, description } = generateMeta({ params, data });
+  return {
+    title,
+    description,
+  };
+};
 
 export const loader = ({ params }: LoaderArgs) => {
   //                       target | unit  | adjective | source | meridiem
