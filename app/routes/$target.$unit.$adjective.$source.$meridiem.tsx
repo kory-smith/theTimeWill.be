@@ -59,9 +59,7 @@ export default function Example() {
   const data = useLoaderData<typeof loader>();
   return (
     <>
-      <h1>
-        <time>{data.source}</time>
-      </h1>
+      <h1>{data.source}</h1>
       <h2>
         It will be <time>{data.solution}</time>
       </h2>
