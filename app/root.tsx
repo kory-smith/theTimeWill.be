@@ -15,7 +15,7 @@ import { DateTime } from "luxon";
 export const validator = withZod(
   z.object({
     target: z.string(),
-    unit: z.enum(["second(s)", "minute(s)", "hour(s)"]),
+    unit: z.enum(["second(s)", "minute(s)", "hour(s)", "seconds", "minutes", "hours"]),
     adjective: z.enum(["before", "after"]),
     source: z.string(),
   })
