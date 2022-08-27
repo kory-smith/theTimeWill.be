@@ -9,6 +9,12 @@ import { getParams } from "remix-params-helper";
 import { ParamsSchema } from "~/helpers/paramsSchema";
 
 export const meta: MetaFunction = ({ params, data }) => {
+  if (!data) {
+    return {
+      title: "Invalid",
+      description: "Invalid",
+    };
+  }
   const { title, description } = generateMeta({ params, data });
   return {
     title,
@@ -72,9 +78,19 @@ export default function Example() {
 
 export function CatchBoundary() {
   const { data } = useCatch();
-  return (
-    <p>
-      {data.error}. Please provide a valid time. You provided {data.input}
-    </p>
-  );
+  // this means the error came from the url search params
+  if (data === "Invalid URL params") {
+    return (
+      <p>
+        The params are wrong. Please input valid params. An example of a valid
+        URL is https://theTimeWill.be/12/minutes/after/1:20/pm
+      </p>
+    );
+    // This means the error came from the form
+  } else
+    return (
+      <p>
+        {data.error}. Please provide a valid time. You provided {data.input}
+      </p>
+    );
 }

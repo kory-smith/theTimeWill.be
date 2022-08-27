@@ -13,6 +13,12 @@ import { ParamsSchema } from "~/helpers/paramsSchema";
 // https://theTimeWill.be/122/minutes/before/1350/
 
 export const meta: MetaFunction = ({ params, data }) => {
+  if (!data) {
+    return {
+      title: "Invalid",
+      description: "Invalid",
+    };
+  }
   const { title, description } = generateMeta({ params, data });
   return {
     title,
