@@ -4,6 +4,7 @@ import { Params, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 import { getTimeFormat } from "~/helpers/timeFormatting";
 import { generateMeta } from "~/helpers/generateMeta";
+import { getPlusOrMinus } from "~/helpers/getPlusOrMinus";
 
 // This is the page for military time or 24-hour time
 // https://theTimeWill.be/122/minutes/before/13:50/
@@ -26,6 +27,7 @@ export const loader = ({ params }: LoaderArgs) => {
   invariant(unit, "must be existing");
   invariant(source, "must be existing");
   invariant(target, "must be existing");
+  invariant(adjective, "must exist")
 
   const { parsingKey, formatKey } = getTimeFormat(params);
 
@@ -38,7 +40,7 @@ export const loader = ({ params }: LoaderArgs) => {
 
   const trueSource = DateTime.fromFormat(source.trim(), parsingKey);
 
-  const plusOrMinus = adjective === "past" ? "plus" : "minus";
+  const plusOrMinus = getPlusOrMinus(adjective)
 
   const solution = trueSource[plusOrMinus]({ [unit]: target });
 

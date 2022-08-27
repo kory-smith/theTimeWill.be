@@ -4,6 +4,7 @@ import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 import { getTimeFormat, is24HourTime } from "~/helpers/timeFormatting";
 import { generateMeta } from "~/helpers/generateMeta";
+import { getPlusOrMinus } from "~/helpers/getPlusOrMinus";
 
 export const meta: MetaFunction = ({ params, data }) => {
   const { title, description } = generateMeta({ params, data });
@@ -22,6 +23,7 @@ export const loader = ({ params }: LoaderArgs) => {
   invariant(unit, "must be existing");
   invariant(source, "must be existing");
   invariant(target, "must be existing");
+  invariant(adjective, "must exist")
 
   // If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
   if (parseInt(target) === 1 && unit[unit.length - 1] === "s") {
@@ -41,7 +43,7 @@ export const loader = ({ params }: LoaderArgs) => {
     parsingKey
   );
 
-  const plusOrMinus = adjective === "past" ? "plus" : "minus";
+  const plusOrMinus = getPlusOrMinus(adjective)
 
   const solution = trueSource[plusOrMinus]({ [unit]: target });
 
