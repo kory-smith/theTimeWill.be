@@ -60,8 +60,7 @@ export function getTimeFormat({ source, meridiem }: Params) {
   // 07 pm || 12 pm
   if (
     regexes.paddedTwelveHourWithMeridiem.test(fullTime) &&
-    hours <= 12 &&
-    minutes <= 59
+    hours <= 12
   ) {
     return {
       parsingKey: parsingKeys.paddedTwelveHourWithMeridiem,
@@ -70,8 +69,7 @@ export function getTimeFormat({ source, meridiem }: Params) {
     // 7 pm
   } else if (
     regexes.twelveHourWithMeridiem.test(fullTime) &&
-    hours <= 12 &&
-    minutes <= 59
+    hours <= 12
   ) {
     return {
       parsingKey: parsingKeys.twelveHourWithMeridiem,
