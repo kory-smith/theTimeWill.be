@@ -7,6 +7,7 @@ import { generateMeta } from "~/helpers/generateMeta";
 import { getPlusOrMinus } from "~/helpers/getPlusOrMinus";
 import { getParams } from "remix-params-helper";
 import { ParamsSchema } from "~/helpers/paramsSchema";
+import { getOffset } from "~/helpers/getOffset";
 
 export const meta: MetaFunction = ({ params, data }) => {
   if (!data) {
@@ -56,11 +57,15 @@ export const loader = ({ params }: LoaderArgs) => {
 
     const solution = trueSource[plusOrMinus]({ [unit]: target });
 
+    const offset = getOffset(trueSource, solution)
+
+
     return json({
       source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toFormat(
         parsingKey
       )}?`,
       solution: solution.toLocaleString(formatKey),
+      offset
     });
   } else {
     throw json("Invalid URL params");
@@ -74,6 +79,7 @@ export default function Example() {
       <h1>{data.source}</h1>
       <h2>
         It will be <time>{data.solution}</time>
+        {data.offset ? ` ${data.offset}` : null}
       </h2>
     </>
   );
