@@ -33,12 +33,11 @@ export const loader = ({ params }: LoaderArgs) => {
   if (parsedParams.success) {
     const { target, unit, adjective, source, meridiem } = parsedParams.data;
     // If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
-    if (target === 1 && unit[unit.length - 1] === "s") {
+    const unitLastLetter = unit[unit.length - 1];
+    if (target === 1 && unitLastLetter === "s") {
+      const unitSingular = unit.slice(0, unit.length - 1);
       return redirect(
-        `/${target}/${unit.slice(
-          0,
-          unit.length - 1
-        )}/${adjective}/${source}/${meridiem}`
+        `/${target}/${unitSingular}/${adjective}/${source}/${meridiem}`
       );
     }
 
