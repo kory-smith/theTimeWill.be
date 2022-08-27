@@ -3,7 +3,6 @@ import { ValidatedForm, validationError } from "remix-validated-form";
 import { z } from "zod";
 import { ActionArgs, MetaFunction, redirect } from "@remix-run/node";
 import {
-  Form,
   Links,
   LiveReload,
   Meta,
@@ -72,13 +71,17 @@ export const action = async ({ request }: ActionArgs) => {
 
   if (formData.error) return validationError(formData.error);
 
-  const { adjective, source, target, unit } = formData.data
+  const { adjective, source, target, unit } = formData.data;
 
-  const unitWithoutParens = unit.replace(/(\(|\))/g, "")
+  const unitWithoutParens = unit.replace(/(\(|\))/g, "");
 
-  const sourceDT = DateTime.fromFormat(source, "HH:mm")
+  const sourceDT = DateTime.fromFormat(source, "HH:mm");
 
-  const [twelveHourTime, meridiem] = sourceDT.toLocaleString(DateTime.TIME_SIMPLE).split(" ")
+  const [twelveHourTime, meridiem] = sourceDT
+    .toLocaleString(DateTime.TIME_SIMPLE)
+    .split(" ");
 
-  return redirect(`/${target}/${unitWithoutParens}/${adjective}/${twelveHourTime}/${meridiem.toLowerCase()}`);
+  return redirect(
+    `/${target}/${unitWithoutParens}/${adjective}/${twelveHourTime}/${meridiem.toLowerCase()}`
+  );
 };
