@@ -5,7 +5,7 @@ import { DateTime } from "luxon";
 import { getTimeFormat, is24HourTime } from "~/helpers/timeFormatting";
 import { generateMeta } from "~/helpers/generateMeta";
 
-export const meta: MetaFunction = ({ params, data, location }) => {
+export const meta: MetaFunction = ({ params, data }) => {
   const { title, description } = generateMeta({ params, data });
   return {
     title,
