@@ -11,6 +11,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { DateTime } from "luxon";
+import styles from "./styles/app.css"
 
 export const validator = withZod(
   z.object({
@@ -26,6 +27,10 @@ export const meta: MetaFunction = () => ({
   title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
 });
+
+export const links = () => {
+  return [{rel: "stylesheet", href: styles}]
+}
 
 export default function App() {
   return (
