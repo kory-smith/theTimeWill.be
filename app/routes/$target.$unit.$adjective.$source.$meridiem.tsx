@@ -9,20 +9,20 @@ import { ParamsSchema } from "~/helpers/paramsSchema";
 import { getOffset } from "~/helpers/getOffset";
 
 export const meta: MetaFunction = ({ params, data }) => {
-  if (!data) {
-    return {
-      title: "Invalid",
-      description: "Invalid",
-    };
-  }
-  const { title, description } = generateMeta({ params, data });
-  return {
-    title,
-    description,
-  };
+	if (!data) {
+		return {
+			title: "Invalid",
+			description: "Invalid",
+		};
+	}
+	const { title, description } = generateMeta({ params, data });
+	return {
+		title,
+		description,
+	};
 };
 
-export const loader = ({ params, request}: LoaderArgs) => {
+export const loader = ({ params, request }: LoaderArgs) => {
 	//                       target | unit  | adjective | source | meridiem
 	//                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
 	// https://theTimeWill.be/122   /minutes/before     /7:50    /pm
@@ -30,7 +30,8 @@ export const loader = ({ params, request}: LoaderArgs) => {
 	const parsedParams = getParams(params, ParamsSchema);
 
 	const currentURL = new URL(request.url);
-	const hasMeridiem = currentURL.pathname.match(/(am|a\.m\.|pm|p\.m\.)/)?.length > 0;
+	const hasMeridiem =
+		currentURL.pathname.match(/(am|a\.m\.|pm|p\.m\.)/)?.length > 0;
 
 	if (parsedParams.success) {
 		const { target, unit, adjective, source, meridiem } = parsedParams.data;
@@ -47,10 +48,7 @@ export const loader = ({ params, request}: LoaderArgs) => {
 		const { parsingKey, formatKey } = getTimeFormat(params);
 
 		const dateTimeText = hasMeridiem ? `${source} ${meridiem}` : source;
-		const trueSource = DateTime.fromFormat(
-			dateTimeText,
-			parsingKey,
-		);
+		const trueSource = DateTime.fromFormat(dateTimeText, parsingKey);
 
 		const plusOrMinus = getPlusOrMinus(adjective);
 
@@ -101,20 +99,20 @@ export default function Example() {
 }
 
 export function CatchBoundary() {
-  const { data } = useCatch();
-  // this means the error came from the url search params
-  if (data === "Invalid URL params") {
-    return (
-      <p>
-        The params are wrong. Please input valid params. An example of a valid
-        URL is https://theTimeWill.be/12/minutes/after/1:20/pm
-      </p>
-    );
-    // This means the error came from the form
-  } else
-    return (
-      <p>
-        {data.error}. Please provide a valid time. You provided {data.input}
-      </p>
-    );
+	const { data } = useCatch();
+	// this means the error came from the url search params
+	if (data === "Invalid URL params") {
+		return (
+			<p>
+				The params are wrong. Please input valid params. An example of a valid
+				URL is https://theTimeWill.be/12/minutes/after/1:20/pm
+			</p>
+		);
+		// This means the error came from the form
+	} else
+		return (
+			<p>
+				{data.error}. Please provide a valid time. You provided {data.input}
+			</p>
+		);
 }
