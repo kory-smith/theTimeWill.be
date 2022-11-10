@@ -1,6 +1,15 @@
-
 export function getPlusOrMinus(adjective: string) {
-	if (adjective === "before") {
-		return "minus"
-	} else return "plus"
+	const beforeSynonyms = [
+		"before",
+		"earlier",
+		"previous",
+		"prior",
+		"prior to",
+		"up to",
+	];
+	if (beforeSynonyms.includes(adjective)) {
+		return "minus";
+	} else {
+		return "plus";
+	}
 }
