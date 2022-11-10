@@ -18,5 +18,7 @@ export function getOffset(from: DateTime, to: DateTime) {
 		return "";
 	} else if (Math.abs(leftOfDecimal) === 1) {
 		return `and ${Math.abs(leftOfDecimal)} calendar day ${adjective}`;
-	} else return `and ${Math.abs(leftOfDecimal)} calendar days ${adjective}`;
+	} else {
+		return `and ${Math.abs(leftOfDecimal)} calendar days ${adjective}`;
+	}
 }

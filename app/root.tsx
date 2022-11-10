@@ -69,9 +69,9 @@ export default function App() {
 						className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm inline-block text-sm font-medium text-gray-700"
 					/>
 					<datalist id="units">
-						<option value="second(s)"></option>
-						<option value="minute(s)"></option>
-						<option value="hour(s)"></option>
+						<option value="second(s)" />
+						<option value="minute(s)" />
+						<option value="hour(s)" />
 					</datalist>
 
 					<input
@@ -81,8 +81,8 @@ export default function App() {
 						className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm inline-block text-sm font-medium text-gray-700"
 					/>
 					<datalist id="adjectives">
-						<option value="before"></option>
-						<option value="after"></option>
+						<option value="before" />
+						<option value="after" />
 					</datalist>
 
 					<input
@@ -109,7 +109,9 @@ export default function App() {
 export const action = async ({ request }: ActionArgs) => {
 	const formData = await validator.validate(await request.formData());
 
-	if (formData.error) return validationError(formData.error);
+	if (formData.error) {
+		return validationError(formData.error);
+	}
 
 	const { adjective, source, target, unit } = formData.data;
 

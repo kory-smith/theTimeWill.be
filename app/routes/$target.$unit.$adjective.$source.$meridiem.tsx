@@ -109,10 +109,11 @@ export function CatchBoundary() {
 			</p>
 		);
 		// This means the error came from the form
-	} else
+	} else {
 		return (
 			<p>
 				{data.error}. Please provide a valid time. You provided {data.input}
 			</p>
 		);
+	}
 }

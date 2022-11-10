@@ -42,7 +42,9 @@ export function getTimeFormat({ source, meridiem }: Params) {
 	let fullTime;
 	if (meridiem) {
 		fullTime = `${source} ${meridiem}`.trim();
-	} else fullTime = source.trim();
+	} else {
+		fullTime = source.trim();
+	}
 
 	// 12-hour time
 	const [hours, minutes] = source.split(":").map((num) => parseInt(num));
