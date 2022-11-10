@@ -6,6 +6,8 @@ export function getPlusOrMinus(adjective: string) {
 		"prior",
 		"prior to",
 		"up to",
+		"ahead of",
+		"afore",
 	];
 	if (beforeSynonyms.includes(adjective)) {
 		return "minus";
