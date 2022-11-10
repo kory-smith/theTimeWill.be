@@ -23,52 +23,52 @@ export const meta: MetaFunction = ({ params, data }) => {
   };
 };
 
-export const loader = ({ params }: LoaderArgs) => {
-  //                       target | unit  | adjective | source | meridiem
-  //                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
-  // https://theTimeWill.be/122   /minutes/before     /7:50    /pm
+export const loader = ({ params, request}: LoaderArgs) => {
+	//                       target | unit  | adjective | source | meridiem
+	//                        ▼▼▼▼▼▼ ▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼▼▼▼ ▼▼▼▼▼▼▼▼  ▼▼▼▼▼▼▼▼▼▼
+	// https://theTimeWill.be/122   /minutes/before     /7:50    /pm
 
-  const parsedParams = getParams(params, ParamsSchema);
+	const parsedParams = getParams(params, ParamsSchema);
 
-  if (parsedParams.success) {
-    const { target, unit, adjective, source, meridiem } = parsedParams.data;
-    // If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
-    const unitLastLetter = unit[unit.length - 1];
-    if (target === 1 && unitLastLetter === "s") {
-      const unitSingular = unit.slice(0, unit.length - 1);
-      return redirect(
-        `/${target}/${unitSingular}/${adjective}/${source}/${meridiem}`
-      );
-    }
+	const currentURL = new URL(request.url);
+	const hasMeridiem = currentURL.pathname.match(/(am|a\.m\.|pm|p\.m\.)/)?.length > 0;
 
-    if (is24HourTime(source)) {
-      return redirect(`/${target}/${unit}/${adjective}/${source}/`);
-    }
+	if (parsedParams.success) {
+		const { target, unit, adjective, source, meridiem } = parsedParams.data;
 
-    const { parsingKey, formatKey } = getTimeFormat(params);
+		// If the target is 1 and we are using the plural (e.g. 1 minutes) redirect to singular
+		const unitLastLetter = unit[unit.length - 1];
+		if (target === 1 && unitLastLetter === "s") {
+			const unitSingular = unit.slice(0, unit.length - 1);
+			return redirect(
+				`/${target}/${unitSingular}/${adjective}/${source}/${meridiem}`,
+			);
+		}
 
-    const trueSource = DateTime.fromFormat(
-      `${source} ${meridiem}`.trim(),
-      parsingKey
-    );
+		const { parsingKey, formatKey } = getTimeFormat(params);
 
-    const plusOrMinus = getPlusOrMinus(adjective);
+		const dateTimeText = hasMeridiem ? `${source} ${meridiem}` : source;
+		const trueSource = DateTime.fromFormat(
+			dateTimeText,
+			parsingKey,
+		);
 
-    const solution = trueSource[plusOrMinus]({ [unit]: target });
+		const plusOrMinus = getPlusOrMinus(adjective);
 
-    const offset = getOffset(trueSource, solution)
+		const solution = trueSource[plusOrMinus]({ [unit]: target });
 
+		const offset = getOffset(trueSource, solution);
 
-    return json({
-      source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toFormat(
-        parsingKey
-      )}?`,
-      solution: solution.toLocaleString(formatKey),
-      offset
-    });
-  } else {
-    throw json("Invalid URL params");
-  }
+		return json({
+			source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toFormat(
+				parsingKey,
+			)}?`,
+			solution: solution.toLocaleString(formatKey),
+			offset,
+		});
+	} else {
+		throw json("Invalid URL params");
+	}
 };
 
 export default function Example() {
