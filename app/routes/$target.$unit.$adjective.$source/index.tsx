@@ -7,3 +7,17 @@ import { generateMeta } from "~/helpers/generateMeta";
 import { getPlusOrMinus } from "~/helpers/getPlusOrMinus";
 export * from "../$target.$unit.$adjective.$source.$meridiem";
 export { default } from "../$target.$unit.$adjective.$source.$meridiem";
+
+export const meta: MetaFunction = ({ params, data }) => {
+	if (!data) {
+		return {
+			title: "Invalid",
+			description: "Invalid",
+		};
+	}
+	const { title, description } = generateMeta({ params, data });
+	return {
+		title,
+		description,
+	};
+};
