@@ -1,8 +1,7 @@
 import { json, LoaderArgs, redirect, MetaFunction } from "@remix-run/node";
-import invariant from "tiny-invariant";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
-import { getTimeFormat, is24HourTime } from "~/helpers/timeFormatting";
+import { getTimeFormat } from "~/helpers/timeFormatting";
 import { generateMeta } from "~/helpers/generateMeta";
 import { getPlusOrMinus } from "~/helpers/getPlusOrMinus";
 import { getParams } from "remix-params-helper";
