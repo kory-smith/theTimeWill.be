@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        "massive": "10rem"
+        "massive": "14rem"
       },
       fontFamily: {
         kory: ["Baskerville Bold Italic", "sans-serif"]
