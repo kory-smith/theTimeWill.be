@@ -32,7 +32,7 @@ export const loader = ({ params, request }: LoaderArgs) => {
 
   const currentURL = new URL(request.url);
   const hasMeridiem =
-    currentURL.pathname.match(/(am|a\.m\.|pm|p\.m\.)/)?.length > 0;
+    currentURL.pathname.match(/(am|a\.m\.|pm|p\.m\.)/i)?.length > 0;
 
   if (parsedParams.success) {
     const { target, unit, adjective, source, meridiem } = parsedParams.data;
