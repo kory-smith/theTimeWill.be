@@ -62,8 +62,6 @@ export default function App() {
 			</head>
 			<body>
 			<div className="m-16">
-				<Outlet />
-				<hr />
 				<ValidatedForm validator={validator} method="post">
 					<h2 className="text-3xl">What time will it be...</h2>
 
@@ -111,6 +109,8 @@ export default function App() {
 						Go
 					</button>
 				</ValidatedForm>
+				<hr className="m-2" />
+				<Outlet />
 				</div>
 				<Footer />
 				<ScrollRestoration />

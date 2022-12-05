@@ -112,14 +112,14 @@ const CopySolution = ({ solution }: { solution: string }) => {
 export default function Example() {
   const data = useLoaderData<typeof loader>();
   return (
-    <>
-      <h1 className="text-3xl ">{data.source}</h1>
+    <div className="my-8">
+      <h1 className="text-3xl">{data.source}</h1>
       <h2 className="font-kory text-massive inline">
-        It will be <time className="text-blue-500">{data.solution}</time>
+        It'll be <time className="text-blue-500">{data.solution}</time>
         <CopySolution solution={data.solution} />
         {data.offset ? ` ${data.offset}` : null}
       </h2>
-    </>
+    </div>
   );
 }
 
