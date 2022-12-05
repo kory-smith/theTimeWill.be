@@ -39,7 +39,19 @@ export const links = () => {
 	return [{ rel: "stylesheet", href: styles }];
 };
 
-const times = ["seconds", "minutes", "hours"];
+function Footer() {
+	return (
+		<footer className="bg-black text-white text-center py-4 w-screen absolute bottom-0">
+			Made with ❤️️ by{" "}
+			<a
+				href="https://github.com/kory-smith"
+				className="underline"
+			>
+				Kory Smith
+			</a>
+		</footer>
+	);
+}
 
 export default function App() {
 	return (
@@ -48,7 +60,8 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body className="m-16">
+			<body>
+			<div className="m-16">
 				<Outlet />
 				<hr />
 				<ValidatedForm validator={validator} method="post">
@@ -98,6 +111,8 @@ export default function App() {
 						Go
 					</button>
 				</ValidatedForm>
+				</div>
+				<Footer />
 				<ScrollRestoration />
 				<Scripts />
 				<LiveReload />
