@@ -76,7 +76,7 @@ export default function Example() {
   return (
     <>
       <h1 className="text-3xl ">{data.source}</h1>
-      <h2 className="font-kory text-fucko inline">
+      <h2 className="font-kory text-massive inline">
 
         It will be <time className="text-blue-500">{data.solution}</time>
         <button
