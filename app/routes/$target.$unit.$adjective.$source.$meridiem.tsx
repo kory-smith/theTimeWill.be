@@ -74,7 +74,7 @@ const ClipboardSVG = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
-    className="w-14 h-14 inline border mx-auto my-auto"
+    className="w-14 h-14 inline mx-auto my-auto"
   >
     <path
       fillRule="evenodd"
