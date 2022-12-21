@@ -9,7 +9,8 @@ module.exports = {
         "massive": "14rem"
       },
       fontFamily: {
-        kory: ["Baskerville Bold Italic", "sans-serif"]
+        kory: ["Baskerville Bold Italic", "sans-serif"],
+        avenir: ["Avenir Heavy", "sans-serif"],
       }
     },
   },

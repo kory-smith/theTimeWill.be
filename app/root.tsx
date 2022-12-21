@@ -63,7 +63,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="font-avenir">
         <div className="m-16">
           <ValidatedForm validator={validator} resetAfterSubmit method="post">
             <h2 className="text-3xl">What time will it be...</h2>
