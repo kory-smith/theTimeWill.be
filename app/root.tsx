@@ -44,7 +44,7 @@ export const links = () => {
 
 function Footer() {
 	return (
-		<footer className="bg-black text-white text-center py-4 w-screen absolute bottom-0">
+		<footer className="bg-black text-white text-center py-4">
 			Made with ❤️️ by{" "}
 			<a
 				href="https://github.com/kory-smith"
@@ -63,8 +63,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="font-avenir">
-        <div className="m-16">
+      <body className="font-avenir flex flex-col min-h-screen">
+        <main className="m-16 flex-grow">
           <ValidatedForm validator={validator} resetAfterSubmit method="post">
             <h2 className="text-3xl">What time will it be...</h2>
 
