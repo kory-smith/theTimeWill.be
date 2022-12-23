@@ -60,7 +60,7 @@ const sms = new SitemapAndIndexStream({
   },
 });
 
-sms.pipe(createWriteStream(resolve("./sitemap-index.xml")));
+sms.pipe(createWriteStream(resolve("./public/sitemap-index.xml")));
 
 const arrayOfSitemapItems = generateURLs();
 
