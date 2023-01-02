@@ -36,7 +36,8 @@ export const validator = withZod(
 
 export const meta: MetaFunction = () => ({
 	charset: "utf-8",
-	title: "New Remix App",
+	title: "theTimeWill.be",
+	description: "Find out what time it will be a certain number of minutes or hours in the past or future!",
 	viewport: "width=device-width,initial-scale=1",
 });
 
