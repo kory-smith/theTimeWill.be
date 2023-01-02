@@ -39,6 +39,7 @@ export const meta: MetaFunction = () => ({
 	title: "theTimeWill.be",
 	description: "Find out what time it will be a certain number of minutes or hours in the past or future!",
 	viewport: "width=device-width,initial-scale=1",
+	"google-site-verification": "q76-nYONvwWEQWl-G_t61H9BkRSLaiqnwC9arBOy3yQ"
 });
 
 export const links = () => {
