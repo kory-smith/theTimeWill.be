@@ -20,11 +20,12 @@ function generateURLs() {
             if (hour === 0 || minute === 0) {
               continue;
             }
+            const adjustedUnit = i === 1 ? unit.slice(0, -1) : unit;
             const adjustedHour = hour > 12 ? hour - 12 : hour;
             const adjustedMinute = minute < 10 ? `0${minute}` : minute;
             const amOrPM = hour < 12 ? "am" : "pm";
             const time = `${adjustedHour}:${adjustedMinute}`;
-            const url = `/${i}/${unit}/${adjective}/${time}/${amOrPM}`;
+            const url = `/${i}/${adjustedUnit}/${adjective}/${time}/${amOrPM}`;
             final.push({ url, changefreq: "never" });
           }
         }
