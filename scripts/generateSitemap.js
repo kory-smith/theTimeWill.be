@@ -12,7 +12,7 @@ function generateURLs() {
   const adjectives = ["before", "after"];
 
   const upperLimit = 500;
-  for (let i = 0; i < upperLimit; i++) {
+  for (let i = 1; i < upperLimit; i++) {
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute++) {
         for (let unit of units) {
