@@ -1,75 +1,16 @@
-## Development
+![image](https://user-images.githubusercontent.com/26067990/210393318-37dd9ecd-6af8-4e05-8824-03af659391e1.png)
 
-- Start dev server:
+[theTimeWill.be](https://thetimewill.be/) is a website built to answer the question "What time will it be x minutes before | after y?". For some reason, I find myself asking that question often.
 
-  ```sh
-  npm run dev
-  ```
+I know that a lot of other websites do the same thing, but none of them handle the "before" case, and I wanted to play with [Remix](https://remix.run/).
 
-## Deployment
+I tried to make the site as SEO-friendly as possible, so hopefully the search "what time will it be 45 minutes before 3:20 PM?" will someday return this site. I really do just want to be helpful to people who have those weird time questions.
 
-This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
+---
 
-Prior to your first deployment, you'll need to do a few things:
+## Limitations and Issues
+There are a lot of things I could have done better. The most egregious are:
+- No mobile styling
+- No error messages when invalid data is entered into the form (currently the invalid field is just refocused)
 
-- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
-
-- Sign up and log in to Fly
-
-  ```sh
-  fly auth signup
-  ```
-
-  > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
-
-- Create two apps on Fly, one for staging and one for production:
-
-  ```sh
-  fly apps create the-time-will-be
-  fly apps create the-time-will-be-staging
-  ```
-  > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
-
-  - Initialize Git.
-
-  ```sh
-  git init
-  ```
-
-- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
-
-  ```sh
-  git remote add origin <ORIGIN_URL>
-  ```
-
-- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
-
-- Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
-
-  ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app the-time-will-be
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app the-time-will-be-staging
-  ```
-
-  If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
-
-- Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
-
-  ```sh
-  fly volumes create data --size 1 --app the-time-will-be
-  fly volumes create data --size 1 --app the-time-will-be-staging
-  ```
-
-Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
-
-### Getting Help with Deployment
-
-If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
-
-## GitHub Actions
-
-We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
-
-### Type Checking
-
-This project uses TypeScript. It's recommended to get TypeScript set up for your editor to get a really great in-editor experience with type checking and auto-complete. To run type checking across the whole project, run `npm run typecheck`.
+I plan to use this website as a way to practice my CSS when I learn more of that, so stay tuned.
