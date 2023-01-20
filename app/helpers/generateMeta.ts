@@ -9,7 +9,7 @@ export function generateMeta({
 	params: Params;
 }) {
 	return {
-		title: `It'll be ${data.solution} | ${params.target} ${params.unit} ${params.adjective} ${params.source}`,
+    title: `It'll be ${data.solution} | ${params.target} ${params.unit} ${ params.adjective } ${params.source} ${params.meridiem ? params.meridiem.toUpperCase() : ""}`,
 		description: `It'll be ${data.solution} ${params.target} ${params.unit} ${params.adjective} ${params.source}`,
 	};
 }
