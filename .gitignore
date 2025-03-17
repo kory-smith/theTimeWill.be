@@ -1,21 +1,25 @@
-# We don't want lockfiles in stacks, as people could use a different package manager
-# This part will be removed by `remix.init`
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-pnpm-lock.yml
-
 node_modules
 
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
 /build
-/public/build
-.env
 
-/cypress/screenshots
-/cypress/videos
-/prisma/data.db
-/prisma/data.db-journal
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
 .cache
-
-/app/styles/tailwind.css
