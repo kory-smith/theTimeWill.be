@@ -1,16 +1,16 @@
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 import { error } from '@sveltejs/kit';
-import invariant from "tiny-invariant";
+import invariant from 'tiny-invariant';
 
 const regexes = {
 	// 07 pm || 12 pm
-	paddedTwelveHourWithMeridiem: /^\d{2}(\ )(AM|PM)$/i,
+	paddedTwelveHourWithMeridiem: /^\d{2}( )(AM|PM)$/i,
 	// 7 pm
-	twelveHourWithMeridiem: /^\d{1}(\ )(AM|PM)$/i,
+	twelveHourWithMeridiem: /^\d{1}( )(AM|PM)$/i,
 	// 07:22 pm || 12:22 pm
-	paddedTwelveHourWithMeridiemAndMinutes: /^(\d{2})(:)(\d{2})(\ )(AM|PM)$/i,
+	paddedTwelveHourWithMeridiemAndMinutes: /^(\d{2})(:)(\d{2})( )(AM|PM)$/i,
 	// 7:22 pm
-	twelveHourWithMeridiemAndMinutes: /^(\d{1})(:)(\d{2})(\ )(AM|PM)$/i,
+	twelveHourWithMeridiemAndMinutes: /^(\d{1})(:)(\d{2})( )(AM|PM)$/i,
 	// 13 || 07
 	paddedTwentyFourHour: /^(\d{2})$/i,
 	// 7
@@ -20,24 +20,27 @@ const regexes = {
 	// 0722
 	paddedTwentyFourHourWithMinutesNoColon: /^(\d{2})(\d{2})$/i,
 	// 7:22
-	twentyFourHourWithMinutes: /^(\d{1})(:)(\d{2})$/i,
+	twentyFourHourWithMinutes: /^(\d{1})(:)(\d{2})$/i
 };
 
 // https://moment.github.io/luxon/#/parsing?id=table-of-tokens
 const parsingKeys = {
-	paddedTwelveHourWithMeridiem: "hh a",
-	twelveHourWithMeridiem: "h a",
-	paddedTwelveHourWithMeridiemAndMinutes: "hh:mm a",
-	twelveHourWithMeridiemAndMinutes: "h:mm a",
-	paddedTwentyFourHour: "HH",
-	twentyFourHour: "H",
-	paddedTwentyFourHourWithMinutes: "HH:mm",
-	paddedTwentyFourHourWithMinutesNoColon: "HHmm",
-	twentyFourHourWithMinutes: "H:mm",
-};
+	paddedTwelveHourWithMeridiem: 'hh a',
+	twelveHourWithMeridiem: 'h a',
+	paddedTwelveHourWithMeridiemAndMinutes: 'hh:mm a',
+	twelveHourWithMeridiemAndMinutes: 'h:mm a',
+	paddedTwentyFourHour: 'HH',
+	twentyFourHour: 'H',
+	paddedTwentyFourHourWithMinutes: 'HH:mm',
+	paddedTwentyFourHourWithMinutesNoColon: 'HHmm',
+	twentyFourHourWithMinutes: 'H:mm'
+} as const;
 
-export function getTimeFormat({ source, meridiem }: { source: string; meridiem?: string }) {
-	invariant(source, "Must provide a source");
+export function getTimeFormat({ source, meridiem }: { source: string; meridiem?: string }): {
+	parsingKey: (typeof parsingKeys)[keyof typeof parsingKeys];
+	formatKey: Intl.DateTimeFormatOptions;
+} {
+	invariant(source, 'Must provide a source');
 	let fullTime;
 	if (meridiem) {
 		fullTime = `${source} ${meridiem}`.trim();
@@ -46,18 +49,18 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	}
 
 	// 12-hour time
-	const [hours, minutes] = source.split(":").map((num) => parseInt(num));
+	const [hours, minutes] = source.split(':').map((num) => parseInt(num));
 	// 07 pm || 12 pm
 	if (regexes.paddedTwelveHourWithMeridiem.test(fullTime) && hours <= 12) {
 		return {
 			parsingKey: parsingKeys.paddedTwelveHourWithMeridiem,
-			formatKey: DateTime.TIME_SIMPLE,
+			formatKey: DateTime.TIME_SIMPLE
 		};
 		// 7 pm
 	} else if (regexes.twelveHourWithMeridiem.test(fullTime) && hours <= 12) {
 		return {
 			parsingKey: parsingKeys.twelveHourWithMeridiem,
-			formatKey: DateTime.TIME_SIMPLE,
+			formatKey: DateTime.TIME_SIMPLE
 		};
 		// 07:22 pm || 12:22 pm
 	} else if (
@@ -67,7 +70,7 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	) {
 		return {
 			parsingKey: parsingKeys.paddedTwelveHourWithMeridiemAndMinutes,
-			formatKey: DateTime.TIME_SIMPLE,
+			formatKey: DateTime.TIME_SIMPLE
 		};
 		// 7:22 pm
 	} else if (
@@ -77,7 +80,7 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	) {
 		return {
 			parsingKey: parsingKeys.twelveHourWithMeridiemAndMinutes,
-			formatKey: DateTime.TIME_SIMPLE,
+			formatKey: DateTime.TIME_SIMPLE
 		};
 	}
 
@@ -85,24 +88,16 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	const militaryHours = parseInt(fullTime.slice(0, 2));
 	const militaryMinutes = parseInt(fullTime.slice(2, fullTime.length));
 	// 07 || 13
-	if (
-		regexes.paddedTwentyFourHour.test(fullTime) &&
-		hours <= 23 &&
-		minutes <= 59
-	) {
+	if (regexes.paddedTwentyFourHour.test(fullTime) && hours <= 23 && minutes <= 59) {
 		return {
 			parsingKey: parsingKeys.paddedTwentyFourHour,
-			formatKey: DateTime.TIME_24_SIMPLE,
+			formatKey: DateTime.TIME_24_SIMPLE
 		};
 		// 7
-	} else if (
-		regexes.twentyFourHour.test(fullTime) &&
-		hours <= 23 &&
-		minutes <= 59
-	) {
+	} else if (regexes.twentyFourHour.test(fullTime) && hours <= 23 && minutes <= 59) {
 		return {
 			parsingKey: parsingKeys.twentyFourHour,
-			formatKey: DateTime.TIME_24_SIMPLE,
+			formatKey: DateTime.TIME_24_SIMPLE
 		};
 		// 07:22 || 13:22
 	} else if (
@@ -112,7 +107,7 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	) {
 		return {
 			parsingKey: parsingKeys.paddedTwentyFourHourWithMinutes,
-			formatKey: DateTime.TIME_24_SIMPLE,
+			formatKey: DateTime.TIME_24_SIMPLE
 		};
 		// 0722 || 1322
 	} else if (
@@ -122,21 +117,17 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	) {
 		return {
 			parsingKey: parsingKeys.paddedTwentyFourHourWithMinutesNoColon,
-			formatKey: DateTime.TIME_24_SIMPLE,
+			formatKey: DateTime.TIME_24_SIMPLE
 		};
 		// 7:22
-	} else if (
-		regexes.twentyFourHourWithMinutes.test(fullTime) &&
-		hours <= 23 &&
-		minutes <= 59
-	) {
+	} else if (regexes.twentyFourHourWithMinutes.test(fullTime) && hours <= 23 && minutes <= 59) {
 		return {
 			parsingKey: parsingKeys.twentyFourHourWithMinutes,
-			formatKey: DateTime.TIME_24_SIMPLE,
+			formatKey: DateTime.TIME_24_SIMPLE
 		};
 	}
 
-error(406, {
-		message: "Your data wasn't in a recognized format",
-})
+	error(406, {
+		message: "Your data wasn't in a recognized format"
+	});
 }
