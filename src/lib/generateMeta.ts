@@ -1,15 +1,18 @@
-import type { AppData } from "@remix-run/node";
-import type { Params } from "@remix-run/react";
-
-export function generateMeta({
-	data,
-	params,
-}: {
-	data: AppData;
-	params: Params;
-}) {
+export function generateMeta(
+	{solution, target, unit, adjective, source, meridiem}: {
+		solution: string;
+		target: number;
+		unit: string;
+		adjective: string;
+		source: string;
+		meridiem?: string;
+	}
+): {
+	title: string,
+	description: string
+}  {
 	return {
-    title: `It'll be ${data.solution} | ${params.target} ${params.unit} ${ params.adjective } ${params.source} ${params.meridiem ? params.meridiem.toUpperCase() : ""}`,
-		description: `It'll be ${data.solution} ${params.target} ${params.unit} ${params.adjective} ${params.source}`,
-	};
+    title: `${solution} | ${target} ${unit} ${ adjective } ${source} ${meridiem ? meridiem.toUpperCase() : ""}`,
+		description: `It'll be ${solution} ${target} ${unit} ${adjective} ${source}`,
+	}
 }

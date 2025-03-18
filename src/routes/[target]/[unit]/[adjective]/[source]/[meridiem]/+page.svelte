@@ -9,6 +9,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{data.metadata.title}</title>
+	<meta name="description" content={data.metadata.description}/>
+</svelte:head>
+
 <div class="my-8">
 	<h1 class="text-3xl">{data.source}</h1>
 	<h2 class="text-massive inline">
