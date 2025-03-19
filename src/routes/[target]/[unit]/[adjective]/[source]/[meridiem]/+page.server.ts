@@ -7,7 +7,6 @@ import { z } from 'zod';
 import type { PageServerLoad } from './$types';
 import { generateMeta } from '$lib/generateMeta';
 
-// This would need to be defined in a separate file
 const ParamsSchema = z.object({
 	target: z.coerce.number(),
 	unit: z.string(),
@@ -18,6 +17,13 @@ const ParamsSchema = z.object({
 
 export const load: PageServerLoad = async ({ params, url }) => {
 	const parsedParams = ParamsSchema.parse(params);
+
+	if (!parsedParams) {
+		error(400, {
+			message: 'Invalid parameters provided'
+		});
+	}
+
 	const { target, unit, adjective, source, meridiem } = parsedParams;
 
 	const match = url.pathname.match(/(am|a\.m\.|pm|p\.m\.)/i);
