@@ -17,7 +17,7 @@
 <div class="my-8">
 	<h1 class="text-3xl">{data.source}</h1>
 	<h2 class="text-massive inline">
-		It'll be <time class="text-blue-500">{data.solution}</time>
+		<time class="text-blue-500">{data.solution}</time>
 		<button
 			onclick={() => {
 				if (navigator.clipboard) {
