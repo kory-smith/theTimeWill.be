@@ -40,22 +40,22 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 	formatKey: Intl.DateTimeFormatOptions;
 } {
 	invariant(source, 'Must provide a source');
-	
+
 	// Trim the source to handle whitespace
 	const trimmedSource = source.trim();
-	
+
 	let fullTime;
 	if (meridiem) {
 		fullTime = `${trimmedSource} ${meridiem}`.trim();
 	} else {
 		fullTime = trimmedSource;
 	}
-	
+
 	// Split time parts safely
 	const timeParts = trimmedSource.split(':');
 	const hours = parseInt(timeParts[0]);
 	const minutes = timeParts.length > 1 ? parseInt(timeParts[1]) : undefined;
-	
+
 	// 12-hour time with meridiem
 	if (meridiem) {
 		// 07 pm || 12 pm
@@ -64,27 +64,29 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 				parsingKey: parsingKeys.paddedTwelveHourWithMeridiem,
 				formatKey: DateTime.TIME_SIMPLE
 			};
-		// 7 pm
+			// 7 pm
 		} else if (regexes.twelveHourWithMeridiem.test(fullTime) && hours <= 12) {
 			return {
 				parsingKey: parsingKeys.twelveHourWithMeridiem,
 				formatKey: DateTime.TIME_SIMPLE
 			};
-		// 07:22 pm || 12:22 pm
+			// 07:22 pm || 12:22 pm
 		} else if (
 			regexes.paddedTwelveHourWithMeridiemAndMinutes.test(fullTime) &&
 			hours <= 12 &&
-			minutes !== undefined && minutes <= 59
+			minutes !== undefined &&
+			minutes <= 59
 		) {
 			return {
 				parsingKey: parsingKeys.paddedTwelveHourWithMeridiemAndMinutes,
 				formatKey: DateTime.TIME_SIMPLE
 			};
-		// 7:22 pm
+			// 7:22 pm
 		} else if (
 			regexes.twelveHourWithMeridiemAndMinutes.test(fullTime) &&
 			hours <= 12 &&
-			minutes !== undefined && minutes <= 59
+			minutes !== undefined &&
+			minutes <= 59
 		) {
 			return {
 				parsingKey: parsingKeys.twelveHourWithMeridiemAndMinutes,
@@ -92,14 +94,14 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 			};
 		}
 	}
-	
+
 	// Handle 24-hour time (military time)
-	
+
 	// 0722 || 1322 (special case for no colon)
 	if (regexes.paddedTwentyFourHourWithMinutesNoColon.test(fullTime)) {
 		const militaryHours = parseInt(fullTime.slice(0, 2));
 		const militaryMinutes = parseInt(fullTime.slice(2, 4));
-		
+
 		if (militaryHours <= 23 && militaryMinutes <= 59) {
 			return {
 				parsingKey: parsingKeys.paddedTwentyFourHourWithMinutesNoColon,
@@ -107,40 +109,42 @@ export function getTimeFormat({ source, meridiem }: { source: string; meridiem?:
 			};
 		}
 	}
-	
+
 	// 07 || 13 (hours only, padded)
 	if (regexes.paddedTwentyFourHour.test(fullTime) && hours <= 23) {
 		return {
 			parsingKey: parsingKeys.paddedTwentyFourHour,
 			formatKey: DateTime.TIME_24_SIMPLE
 		};
-	// 7 (hours only, unpadded)
+		// 7 (hours only, unpadded)
 	} else if (regexes.twentyFourHour.test(fullTime) && hours <= 23) {
 		return {
 			parsingKey: parsingKeys.twentyFourHour,
 			formatKey: DateTime.TIME_24_SIMPLE
 		};
-	// 07:22 || 13:22
+		// 07:22 || 13:22
 	} else if (
 		regexes.paddedTwentyFourHourWithMinutes.test(fullTime) &&
 		hours <= 23 &&
-		minutes !== undefined && minutes <= 59
+		minutes !== undefined &&
+		minutes <= 59
 	) {
 		return {
 			parsingKey: parsingKeys.paddedTwentyFourHourWithMinutes,
 			formatKey: DateTime.TIME_24_SIMPLE
 		};
-	// 7:22
+		// 7:22
 	} else if (
 		regexes.twentyFourHourWithMinutes.test(fullTime) &&
 		hours <= 23 &&
-		minutes !== undefined && minutes <= 59
+		minutes !== undefined &&
+		minutes <= 59
 	) {
 		return {
 			parsingKey: parsingKeys.twentyFourHourWithMinutes,
 			formatKey: DateTime.TIME_24_SIMPLE
 		};
 	}
-	
+
 	throw new Error('Time data was not provided ina recognized format');
 }

@@ -9,7 +9,9 @@ I tried to make the site as SEO-friendly as possible, so hopefully the search "w
 ---
 
 ## Limitations and Issues
+
 There are a lot of things I could have done better. The most egregious are:
+
 - No mobile styling
 - No error messages when invalid data is entered into the form (currently the invalid field is just refocused)
 
