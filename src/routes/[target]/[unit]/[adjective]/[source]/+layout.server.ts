@@ -4,7 +4,7 @@ import { getTimeFormat } from '$lib/timeFormatting';
 import { getPlusOrMinus } from '$lib/getPlusOrMinus';
 import { getOffset } from '$lib/getOffset';
 import { z } from 'zod';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 import { generateMeta } from '$lib/generateMeta';
 
 const ParamsSchema = z.object({
@@ -15,7 +15,7 @@ const ParamsSchema = z.object({
 	meridiem: z.string().optional()
 });
 
-export const load: PageServerLoad = async ({ params, url }) => {
+export const load: LayoutServerLoad = async ({ params, url }) => {
 	const parsedParams = ParamsSchema.parse(params);
 
 	if (!parsedParams) {
@@ -52,14 +52,14 @@ export const load: PageServerLoad = async ({ params, url }) => {
 
 	const offset = getOffset(trueSource, solution);
 
-  const { title, description } = generateMeta({ 
-    adjective,
-    meridiem,
-    solution: solution.toLocaleString(formatKey),
-    source,
-    target,
-    unit
-  });
+	const { title, description } = generateMeta({
+		adjective,
+		meridiem,
+		solution: solution.toLocaleString(formatKey),
+		source,
+		target,
+		unit
+	});
 
 	return {
 		source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toFormat(
@@ -67,9 +67,9 @@ export const load: PageServerLoad = async ({ params, url }) => {
 		)}?`,
 		solution: solution.toLocaleString(formatKey),
 		offset,
-    metadata: {
-      title,
-      description,
-    }
+		metadata: {
+			title,
+			description
+		}
 	};
 };
