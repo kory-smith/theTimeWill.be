@@ -10,8 +10,9 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			'@': './src',
-			'@root': './'
+			'$': './src',
+			'$root': './',
+			"$components": "./src/components",
 		}
 	}
 };
