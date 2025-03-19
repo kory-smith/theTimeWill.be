@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const ParamsSchema = z.object({
-	target: z.number(),
+	target: z.string().transform((val) => parseFloat(val)),
 	unit: z.enum(["second", "seconds", "minute", "minutes", "hour", "hours"]),
 	adjective: z.enum([
 		"after",

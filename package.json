@@ -7,6 +7,7 @@
   "scripts": {
     "sitemap": "bun ./scripts/generateSitemap.js",
     "dev": "vite dev",
+    "dev:open": "vite dev --open",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -20,6 +21,7 @@
     "zod-form-data": "^1.2.4"
   },
   "devDependencies": {
+		"@types/bun": "latest",
     "@remix-run/dev": "^1.8.0",
     "@remix-run/eslint-config": "^1.8.0",
     "@types/luxon": "^3.1.0",

@@ -3,17 +3,9 @@ import { DateTime } from 'luxon';
 import { getTimeFormat } from '$lib/timeFormatting';
 import { getPlusOrMinus } from '$lib/getPlusOrMinus';
 import { getOffset } from '$lib/getOffset';
-import { z } from 'zod';
 import type { LayoutServerLoad } from './$types';
 import { generateMeta } from '$lib/generateMeta';
-
-const ParamsSchema = z.object({
-	target: z.coerce.number(),
-	unit: z.string(),
-	adjective: z.string(),
-	source: z.string(),
-	meridiem: z.string().optional()
-});
+import { ParamsSchema } from '$lib/paramsSchema';
 
 export const load: LayoutServerLoad = async ({ params, url }) => {
 	const parsedParams = ParamsSchema.parse(params);
