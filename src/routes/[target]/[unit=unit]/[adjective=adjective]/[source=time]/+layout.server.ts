@@ -8,15 +8,18 @@ import { generateMeta } from '$lib/generateMeta';
 import { ParamsSchema } from '$lib/paramsSchema';
 
 export const load: LayoutServerLoad = async ({ params, url }) => {
-	const parsedParams = ParamsSchema.parse(params);
+	// This is guaranteed to be a number because of the param matcher
+	// const targetNumber = Number(params.target);
 
-	if (!parsedParams) {
+	const parsedParams = ParamsSchema.safeParse(params);
+
+	if (!parsedParams.success) {
 		error(400, {
 			message: 'Invalid parameters provided'
 		});
 	}
 
-	const { target, unit, adjective, source, meridiem } = parsedParams;
+	const { target, unit, adjective, source, meridiem } = parsedParams.data;
 
 	const match = url.pathname.match(/(am|a\.m\.|pm|p\.m\.)/i);
 	const hasMeridiem = match ? match.length > 0 : false;
