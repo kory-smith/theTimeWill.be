@@ -9,7 +9,7 @@ import { generateMeta } from '$lib/generateMeta';
 export const load: LayoutServerLoad = async ({ params }) => {
 	const { target, unit, adjective, source, meridiem } = params
 
-	// This is guaranteed to be a number because of the target.ts params matcher.
+	// This is guaranteed to be a number because of the target.ts params matcher, but it comes in as a string.
 	const targetNumber = Number(target);
 
 	const hasMeridiem = Boolean(meridiem)
