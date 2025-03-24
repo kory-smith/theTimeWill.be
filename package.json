@@ -16,9 +16,6 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint ."
 	},
-	"dependencies": {
-		"zod": "^3.19.1"
-	},
 	"devDependencies": {
 		"@types/bun": "latest",
 		"@types/luxon": "^3.1.0",

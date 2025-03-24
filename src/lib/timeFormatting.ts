@@ -1,3 +1,5 @@
+import type { Meridiem } from '$/params/meridiem';
+import type { AnyTime } from '$/params/time';
 import { DateTime } from 'luxon';
 import invariant from 'tiny-invariant';
 
@@ -35,7 +37,7 @@ const parsingKeys = {
 	twentyFourHourWithMinutes: 'H:mm'
 } as const;
 
-export function getTimeFormat({ source, meridiem }: { source: string; meridiem?: string }): {
+export function getTimeFormat({ source, meridiem }: { source: AnyTime; meridiem?: Meridiem }): {
 	parsingKey: (typeof parsingKeys)[keyof typeof parsingKeys];
 	formatKey: Intl.DateTimeFormatOptions;
 } {

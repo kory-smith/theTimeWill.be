@@ -11,7 +11,7 @@ const meridiems = [
 'pm.'
 ] as const;
 
-type Meridiem = (typeof meridiems)[number];
+export type Meridiem = (typeof meridiems)[number];
 
 export const match = ((param: string): param is Meridiem => {
 	return meridiems.some((unit) => unit === param);

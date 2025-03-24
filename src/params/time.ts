@@ -33,7 +33,7 @@ type MilitaryTimeWith4Digits = `${HourWith0}${MinuteAny}`;
 type MilitaryTimeWith3Digits = `${Hour0To9}${MinuteAny}`;
 
 // Combining all time formats into one union type
-type AnyTime = StandardTime | MilitaryTimeWith4Digits | MilitaryTimeWith3Digits;
+export type AnyTime = StandardTime | MilitaryTimeWith4Digits | MilitaryTimeWith3Digits;
 
 export const match = ((param): param is AnyTime => {
   // Check for standard time format (HH:MM)

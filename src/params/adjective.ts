@@ -27,7 +27,7 @@ const adjectives = [
 	'thereafter'
 ] as const;
 
-type Adjective = (typeof adjectives)[number];
+export type Adjective = (typeof adjectives)[number];
 
 export const match = ((param: string): param is Adjective => {
 	return adjectives.some((unit) => unit === param);

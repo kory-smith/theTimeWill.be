@@ -5,29 +5,19 @@ import { getPlusOrMinus } from '$lib/getPlusOrMinus';
 import { getOffset } from '$lib/getOffset';
 import type { LayoutServerLoad } from './$types';
 import { generateMeta } from '$lib/generateMeta';
-import { ParamsSchema } from '$lib/paramsSchema';
 
-export const load: LayoutServerLoad = async ({ params, url }) => {
-	// This is guaranteed to be a number because of the param matcher
-	// const targetNumber = Number(params.target);
+export const load: LayoutServerLoad = async ({ params }) => {
+	const { target, unit, adjective, source, meridiem } = params
 
-	const parsedParams = ParamsSchema.safeParse(params);
+	// This is guaranteed to be a number because of the target.ts params matcher.
+	const targetNumber = Number(target);
 
-	if (!parsedParams.success) {
-		error(400, {
-			message: 'Invalid parameters provided'
-		});
-	}
-
-	const { target, unit, adjective, source, meridiem } = parsedParams.data;
-
-	const match = url.pathname.match(/(am|a\.m\.|pm|p\.m\.)/i);
-	const hasMeridiem = match ? match.length > 0 : false;
+	const hasMeridiem = Boolean(meridiem)
 
 	const unitLastLetter = unit[unit.length - 1];
-	if (target === 1 && unitLastLetter === 's') {
+	if (targetNumber === 1 && unitLastLetter === 's') {
 		const unitSingular = unit.slice(0, unit.length - 1);
-		redirect(308, `/${target}/${unitSingular}/${adjective}/${source}/${meridiem || ''}`);
+		redirect(308, `/${targetNumber}/${unitSingular}/${adjective}/${source}/${meridiem || ''}`);
 	}
 
 	const { parsingKey, formatKey } = getTimeFormat(params);
@@ -43,7 +33,7 @@ export const load: LayoutServerLoad = async ({ params, url }) => {
 
 	const plusOrMinus = getPlusOrMinus(adjective);
 
-	const solution = trueSource[plusOrMinus]({ [unit]: target });
+	const solution = trueSource[plusOrMinus]({ [unit]: targetNumber });
 
 	const offset = getOffset(trueSource, solution);
 
@@ -52,12 +42,12 @@ export const load: LayoutServerLoad = async ({ params, url }) => {
 		meridiem,
 		solution: solution.toLocaleString(formatKey),
 		source,
-		target,
+		target: targetNumber,
 		unit
 	});
 
 	return {
-		source: `What time will it be ${target} ${unit} ${adjective} ${trueSource.toFormat(
+		source: `What time will it be ${targetNumber} ${unit} ${adjective} ${trueSource.toFormat(
 			parsingKey
 		)}?`,
 		solution: solution.toLocaleString(formatKey),
