@@ -148,5 +148,5 @@ export function getTimeFormat({ source, meridiem }: { source: AnyTime; meridiem?
 		};
 	}
 
-	throw new Error('Time data was not provided ina recognized format');
+	throw new Error('Time data was not provided in a recognized format');
 }
